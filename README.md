@@ -48,3 +48,18 @@ redis-server
 ```
 flask --app app.web init-db
 ```
+
+### To run file upload server locally
+
+```
+cd local-do-files/
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the server
+python app.py
+
+# Update your own .env file with the following line:
+UPLOAD_URL=http://localhost:8050
+```
