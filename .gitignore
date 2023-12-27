@@ -3,3 +3,7 @@ __pycache__
 .venv
 instance
 .DS_Store
+
+# Generated files 
+local-do-files/uploads
+local-do-files/readme.md
