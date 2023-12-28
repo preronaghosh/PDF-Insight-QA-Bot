@@ -81,4 +81,7 @@ Remove-Item .venv (Type Y when prompted)
 
 # Initial setup and running all the three processes  
 .\setup_and_run_windows.ps1
+
+# For consecutive runs using existing virtual env:
+.\run_windows.ps1
 ```
