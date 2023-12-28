@@ -88,7 +88,7 @@ Remove-Item .venv (Type Y when prompted)
 .\run_windows.ps1
 ```
 
-Unix-based OS:
+Unix-based OS/WSL:
 
 ```
 # Deactivate virtual env if activated and remove .\.venv (if any exists)
