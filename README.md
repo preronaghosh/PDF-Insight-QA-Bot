@@ -67,3 +67,18 @@ python app.py
 # Update your own .env file with the following line:
 UPLOAD_URL=http://localhost:8050
 ```
+
+# Scripts
+
+Native Windows OS:
+
+
+```
+# Deactivate virtual env if activated and remove .\.venv (if any exists)
+
+deactivate
+Remove-Item .venv (Type Y when prompted)
+
+# Initial setup and running all the three processes  
+.\setup_and_run_windows.ps1
+```
