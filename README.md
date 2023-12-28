@@ -41,7 +41,7 @@ pip install gevent
 inv devworker
 ```
 
-### To run Redis (Not required on native Windows)
+### To run Redis (Not required on native Windows, use redis.com)
 
 ```
 redis-server
@@ -70,6 +70,8 @@ UPLOAD_URL=http://localhost:8050
 
 # Scripts
 
+### Before executing the following commands, place the required script into root directory 'pdf-insight-qa-bot/'.
+
 Native Windows OS:
 
 
@@ -84,4 +86,21 @@ Remove-Item .venv (Type Y when prompted)
 
 # For consecutive runs using existing virtual env:
 .\run_windows.ps1
+```
+
+Unix-based OS:
+
+```
+# Deactivate virtual env if activated and remove .\.venv (if any exists)
+
+deactivate
+rm -rf .venv (Type Y when prompted)
+
+# Initial setup and running all the three processes
+chmod +x setup_and_run_unix.sh   
+./setup_and_run_unix.sh
+
+# For consecutive runs using existing virtual env:
+chmod +x run_unix.sh
+./run_unix.sh
 ```

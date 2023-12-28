@@ -1,9 +1,6 @@
 Write-Host "====== Activating virtual environment ======"
 .\.venv\Scripts\activate
 
-# Write-Host "====== Initializing database ======"
-# flask --app app.web init-db
-
 Start-Sleep -Seconds 10
 
 Write-Host "====== Setup is ready ======"
