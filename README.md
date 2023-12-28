@@ -34,10 +34,14 @@ inv dev
 ### To run the worker
 
 ```
+# For native windows platform, run the following command
+pip install gevent
+
+# For MacOS, WSL, Linux, remove -P gevent flag from tasks.py (line: 17)
 inv devworker
 ```
 
-### To run Redis
+### To run Redis (Not required on native Windows)
 
 ```
 redis-server
