@@ -94,7 +94,7 @@ Unix-based OS/WSL:
 # Deactivate virtual env if activated and remove .\.venv (if any exists)
 
 deactivate
-rm -rf .venv (Type Y when prompted)
+rm -rf .venv
 
 # Initial setup and running all the three processes
 chmod +x setup_and_run_unix.sh   
