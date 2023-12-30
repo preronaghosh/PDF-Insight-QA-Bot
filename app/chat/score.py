@@ -1,7 +1,6 @@
-def score_conversation(
-    conversation_id: str, score: float, llm: str, retriever: str, memory: str
-) -> None:
-    """
+from app.chat.redis import client
+
+"""
     This function interfaces with langfuse to assign a score to a conversation, specified by its ID.
     It creates a new langfuse score utilizing the provided llm, retriever, and memory components.
     The details are encapsulated in JSON format and submitted along with the conversation_id and the score.
@@ -15,13 +14,27 @@ def score_conversation(
     Example Usage:
 
     score_conversation('abc123', 0.75, 'llm_info', 'retriever_info', 'memory_info')
-    """
+"""
+def score_conversation(
+    conversation_id: str, score: float, llm: str, retriever: str, memory: str
+) -> None:
+    
+    # score should always be between 0 and 1
+    score = min(max(score, 0), 1)
 
-    pass
+    # save values to redis database
+    client.hincrby("llm_score_values", llm, score)
+    client.hincrby("llm_score_counts", llm, 1)
+
+    client.hincrby("retriever_score_values", retriever, score)
+    client.hincrby("retriever_score_counts", retriever, 1)
+
+    client.hincrby("memory_score_values", memory, score)
+    client.hincrby("memory_score_counts", memory, 1)
 
 
-def get_scores():
-    """
+
+"""
     Retrieves and organizes scores from the langfuse client for different component types and names.
     The scores are categorized and aggregated in a nested dictionary format where the outer key represents
     the component type and the inner key represents the component name, with each score listed in an array.
@@ -41,6 +54,6 @@ def get_scores():
             'retriever': { 'pinecone_store': [score5, score6] },
             'memory': { 'persist_memory': [score7, score8] }
         }
-    """
-
+"""
+def get_scores():
     pass
