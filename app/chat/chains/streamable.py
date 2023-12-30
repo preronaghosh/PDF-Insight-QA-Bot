@@ -3,6 +3,10 @@ from threading import Thread
 from queue import Queue
 from app.chat.callbacks.stream import StreamingHandler
 
+"""
+    StreamableChain can be used as a base chain to build other kinds of streamable chains. 
+    Example: ConversationalStreamableChain, etc.
+"""
 class StreamableChain:
     def stream(self, input):
         queue = Queue()
