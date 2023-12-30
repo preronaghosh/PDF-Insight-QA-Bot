@@ -1,4 +1,4 @@
-import random
+from app.chat.score import random_component_by_score
 from langchain.chat_models import ChatOpenAI
 
 from app.chat.models import ChatArgs
@@ -26,7 +26,7 @@ def select_component(component_type, component_map, chat_args):
         return previous_component, builder(chat_args)
     else:
         # this is a follow up question, use random components
-        random_component_name = random.choice(list(component_map.keys()))
+        random_component_name = random_component_by_score(component_type, component_map)
         builder = component_map[random_component_name]
         return random_component_name, builder(chat_args)
     

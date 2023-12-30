@@ -1,5 +1,8 @@
 from app.chat.redis import client
 
+def random_component_by_score(component_type, component_map):
+    pass
+
 """
     This function interfaces with langfuse to assign a score to a conversation, specified by its ID.
     It creates a new langfuse score utilizing the provided llm, retriever, and memory components.
@@ -31,7 +34,6 @@ def score_conversation(
 
     client.hincrby("memory_score_values", memory, score)
     client.hincrby("memory_score_counts", memory, 1)
-
 
 
 """
