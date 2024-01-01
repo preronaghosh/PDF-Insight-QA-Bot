@@ -1,7 +1,35 @@
+import random
 from app.chat.redis import client
 
-def random_component_by_score(component_type, component_map):
-    pass
+def random_component_by_score(component_type: str, component_map: dict):
+    # Ensure that we have a valid component type in the argument
+    if component_type not in ["llm", "retriever", "memory"]:
+        raise ValueError("Invalid component_type")
+    
+    # Get total score from redis hash for a component type
+    score_values = client.hgetall(f"{component_type}_score_values")
+     
+    # Get total counts from redis hash for a component type
+    score_counts = client.hgetall(f"{component_type}_score_counts")
+    
+    # Get all valid component names from component map
+    names = component_map.keys()
+    avg_scores = {}
+    for name in names:
+        score = int(score_values.get(name, 1))
+        count = int(score_counts.get(name, 1))
+        avg = score / count
+        avg_scores[name] = max(avg, 0.1) # no component ever gets 0 which can lead to it never being picked 
+    
+    # Do a weighted random selection
+    sum_avg_scores = sum(avg_scores.values())
+    random_val = random.uniform(0, sum_avg_scores)
+    cumulative = 0
+    for name, score in avg_scores.items():
+        cumulative += score
+        if random_val <= cumulative:
+            return name
+    
 
 """
     This function interfaces with langfuse to assign a score to a conversation, specified by its ID.
@@ -50,12 +78,26 @@ def score_conversation(
 
         {
             'llm': {
-                'chatopenai-3.5-turbo': [score1, score2],
-                'chatopenai-4': [score3, score4]
+                'chatopenai-3.5-turbo': [avg_score],
+                'chatopenai-4': [avg_score]
             },
-            'retriever': { 'pinecone_store': [score5, score6] },
-            'memory': { 'persist_memory': [score7, score8] }
+            'retriever': { 'pinecone_store': [avg_score] },
+            'memory': { 'persist_memory': [avg_score] }
         }
 """
 def get_scores():
-    pass
+    aggregate = {"llm": {}, "retriever": {}, "memory": {}}
+    
+    for component_type in aggregate.keys():
+        values = client.hgetall(f"{component_type}_score_values")
+        counts = client.hgetall(f"{component_type}_score_counts")
+        
+        names = values.keys()
+        for name in names:
+            # eg. for every model of llm
+            score = int(values.get(name, 1))
+            count = int(counts.get(name, 1))
+            avg_score = score / count
+            aggregate[component_type][name] = [avg_score]
+    
+    return aggregate
