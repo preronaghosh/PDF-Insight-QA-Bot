@@ -56,10 +56,11 @@ def build_chat(chat_args: ChatArgs):
         memory=memory_name
     )
     condense_question_llm = ChatOpenAI(streaming=False)
-
+    
     return StreamingConversationalRetrievalChain.from_llm(
         memory=memory,
         llm=llm,
         retriever=retriever,
-        condense_question_llm=condense_question_llm
+        condense_question_llm=condense_question_llm,
+        metadata=chat_args.metadata
     )
