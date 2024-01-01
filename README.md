@@ -3,7 +3,8 @@
 - Upload multiple PDFs and converse with GPT models to analyse the document and return responses
 - User can get streamed or complete responses at once
 - Improved response quality through user-generated feedback mechanisms
-- Tracing and score visualizations of every component's performance based on user feedback
+- Visualizations of performance scores achieved by every component based on user feedback
+- Tracing using Langfuse for debugging purposes has been added
 
 # First Time Setup
 
